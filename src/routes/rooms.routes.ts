@@ -1,11 +1,13 @@
 import { Router } from "express";
+import roomsControllers from "../controllers/roomsControllers";
 
 const roomsRouter = Router()
 
-roomsRouter.get("/", (_, res) => res.status(200).json({
-  message: "SUCCESS!",
-  path: "/rooms",
-  running_at: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-}))
+roomsRouter.get("/", roomsControllers.index)
+roomsRouter.get("/:id", roomsControllers.show)
+roomsRouter.post("/", roomsControllers.create)
+roomsRouter.put("/:id", roomsControllers.update)
+roomsRouter.patch("/:id", roomsControllers.patch)
+roomsRouter.delete("/:id", roomsControllers.delete)
 
 export default roomsRouter
