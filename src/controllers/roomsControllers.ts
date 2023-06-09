@@ -1,73 +1,42 @@
 import { Request, Response } from "express";
+import roomUseCase from "../useCases/roomUseCase";
 
 class RoomsController {
   async index(_: Request, res: Response) {
-    return await res.status(200).json({
-      message: "SUCCESS!",
-      path: "/rooms",
-      method: "GET",
-      running_at: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-    })
+    const data = await roomUseCase.getAll()
+    return res.status(200).json(data)
   }
 
   async show(req: Request, res: Response) {
     const { id } = req.params
-
-    return await res.status(200).json({
-      message: "SUCCESS!",
-      path: `/rooms/${id}`,
-      method: "GET",
-      running_at: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-    })
+    const data = await roomUseCase.getById(Number(id))
+    return res.status(200).json(data)
   }
 
   async create(req: Request, res: Response) {
     const { code } = req.body
-
-    return await res.status(201).json({
-      message: "SUCCESS!",
-      path: "/rooms",
-      method: "POST",
-      running_at: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }),
-      body: { code }
-    })
+    const data = await roomUseCase.create({ code })
+    return res.status(200).json(data)
   }
 
   async update(req: Request, res: Response) {
     const { id } = req.params
     const { code } = req.body
-
-    return await res.status(200).json({
-      message: "SUCCESS!",
-      path: `/rooms/${id}`,
-      method: "PUT",
-      running_at: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }),
-      body: { code }
-    })
+    const data = await roomUseCase.update(Number(id), { code })
+    return res.status(201).json(data)
   }
 
   async patch(req: Request, res: Response) {
     const { id } = req.params
     const { code } = req.body
-
-    return await res.status(200).json({
-      message: "SUCCESS!",
-      path: `/rooms/${id}`,
-      method: "PATCH",
-      running_at: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }),
-      body: { code }
-    })
+    const data = await roomUseCase.update(Number(id), { code })
+    return res.status(201).json(data)
   }
 
   async delete(req: Request, res: Response) {
     const { id } = req.params
-
-    return await res.status(200).json({
-      message: "SUCCESS!",
-      path: `/rooms/${id}`,
-      method: "DELETE",
-      running_at: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-    })
+    const data = await roomUseCase.delete(Number(id))
+    return res.status(200).json(data)
   }
 }
 
